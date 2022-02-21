@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Draw svg</title>
+  <script src="./dist/snap.svg-min.js"></script>
+</head>
+<body>
+  <svg id="figure" width="600px" height="600px"><pattern id="pattern"></pattern></svg>
+  <a download="sample.svg" id='link' onclick="save()">ダウンロード</a>
+
+  <script>
+    function draw(){
+      var s = Snap("#figure");
+      var bigCircle = s.circle(150, 150, 100);
+    }
+    window.onload = function (){
+      draw();
+    }
+    function save(){
+      var svg = document.getElementById("figure");
+
+      var serializer = new XMLSerializer();
+      var source = serializer.serializeToString(svg);
+
+      var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+      document.getElementById("link").href = url;
+    }
+  </script>
+</body>
+</html>
