@@ -1,0 +1,36 @@
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Hello Vue!</title>
+<script src="https://unpkg.com/vue@next"></script>
+<link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+<div id="app">
+  <div>{{message}}</div>
+  <span v-if="hide">
+    no icon
+  </span>
+  <span v-else>
+    yes icon
+    <i class="fa-regular fa-circle-question"></i>
+  </span>
+  <button @click="changeHide()">show/hide icon</button>
+</div>
+<script>
+Vue.createApp({
+  data: function() {
+    return {
+      message: 'Hello world!',
+      hide: false,
+    }
+  },
+  methods: {
+    changeHide(){
+      this.hide = !this.hide;
+    }
+  }
+}).mount('#app')
+</script>
+</body>
+</html>
