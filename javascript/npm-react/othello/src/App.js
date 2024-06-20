@@ -4,7 +4,7 @@ import { useState } from 'react';
 const EMPTY = '・'
 
 /**
- * 反転する[i, j]の配列を返す
+ * 反転する駒の[i, j]の配列を返す
  * @param {*} cells 
  * @param {*} i 
  * @param {*} j 
@@ -27,6 +27,7 @@ function flipCells(cells, i, j, nextP){
   function search(cells , direction, i, j, fCells, nextP){
     const ni = i + direction[0]
     const nj = j + direction[1]
+    // ますをはみ出していたら終了
     if(ni < 0 || ni >= 8 || nj < 0 || nj >= 8){
       return [];
     }
@@ -38,9 +39,12 @@ function flipCells(cells, i, j, nextP){
     if(np === nextP){
       return fCells;
     }
+    // 同じ色なら反転の候補に追加
     fCells.push([ni, nj])
+    // さらに次のマスを調べる
     return search(cells, direction, ni, nj, fCells, nextP)
   }
+
   const fCells = []
   for (let s = 0; s < directions.length; s++) {
     // 隣が違う色でなければ終了
@@ -62,7 +66,6 @@ function updatedCells(cells, fCells, p){
     const u = fCells[i]
     cells[u[0]][u[1]] = p
   }
-
   return cells
 }
 
@@ -97,6 +100,7 @@ function Board({cells, handleClick}){
 }
 
 function App() {
+  // マスの初期化
   const tmpCells = new Array(8);
   for(let i = 0; i < 8; i++) {
     tmpCells[i] = new Array(8).fill('・');
@@ -106,7 +110,7 @@ function App() {
   tmpCells[4][4] = '⚪️'
   tmpCells[4][3] = '⚫️'
   const [cells, setCells] = useState(tmpCells);
-  const [nextP, setNextP] = useState('⚫️')
+  const [nextP, setNextP] = useState('⚫️') // 次の手番
 
   function nextPiece(){
     if(nextP === '⚫️'){
@@ -116,6 +120,7 @@ function App() {
   }
 
   function handleClick(s, t){
+    // 現在のますをコピーする(意味ないかも...)
     const newCells = new Array(8);
     for(let i = 0; i < 8; i++) {
       newCells[i] = new Array(8).fill('・');
@@ -123,9 +128,10 @@ function App() {
         newCells[i][j] = cells[i][j];
       }
     }
+
     // 盤面を変更できるか調べる
     const fCells = flipCells(newCells, s, t, nextP)
-    // からなら何もしない, 要素があれば更新する
+    // 反転できる相手のこまがないなら何もしない, 要素があれば更新する
     if(fCells.length === 0){
       return;
     }
