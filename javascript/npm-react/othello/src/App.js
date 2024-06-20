@@ -1,12 +1,12 @@
 import './App.css';
 import { useState } from 'react';
 
-function Board({cells}){
+function Board({cells, handleClick}){
   function cell(i){
     const buttons = [];
     for (let j = 0; j < 8; j++) {
       buttons.push(
-        <button className='gameCell'>{cells[i][j]}</button>
+        <button className='gameCell' onClick={() => handleClick(i, j)}>{cells[i][j]}</button>
       )
     }
     return(
@@ -24,17 +24,8 @@ function Board({cells}){
 
   return(
     <>
-      {/* <div>
-        <button>O</button>
-        <button>X</button>
-      </div>
-      <div>
-        <button>O</button>
-        <button>X</button>
-      </div> */}
       <div>
         {rows}
-        {/* {cells} */}
       </div>
     </>
   )
@@ -49,15 +40,23 @@ function App() {
   tmpCells[3][4] = '⚫️'
   tmpCells[4][4] = '⚪️'
   tmpCells[4][3] = '⚫️'
-  // for(let i = 0; i < 8; i++) {
-  //   for(let j = 0; j < 8; i++) {
-  console.log('hello')
-  console.log(tmpCells)
   const [cells, setCells] = useState(tmpCells);
+
+  function handleClick(s, t){
+    const newCells = new Array(8);
+    for(let i = 0; i < 8; i++) {
+      newCells[i] = new Array(8).fill('・');
+      for(let j = 0; j < 8; j++) {
+        newCells[i][j] = cells[i][j];
+      }
+    }
+    newCells[s][t] = 'A'
+    setCells(newCells)
+  }
 
   return (
     <div className="App">
-      <Board cells={cells}/>
+      <Board cells={cells} handleClick={handleClick}/>
     </div>
   );
 }
