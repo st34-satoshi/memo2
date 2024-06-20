@@ -1,13 +1,15 @@
 import './App.css';
 import { useState } from 'react';
 
+const EMPTY = '・'
+
 /**
  * 反転する[i, j]の配列を返す
  * @param {*} cells 
  * @param {*} i 
  * @param {*} j 
  */
-function flipCells(cells, i, j){
+function flipCells(cells, i, j, nextP){
   const directions = [
     [-1, -1],
     [-1, 0],
@@ -18,7 +20,36 @@ function flipCells(cells, i, j){
     [1, 0],
     [1, 1]
   ]
-  return [[4,4]]
+  if(cells[i][j] !== EMPTY){
+    return [];
+  }
+  // [i,j]からすべての方向を調べる
+  function search(cells , direction, i, j, fCells, nextP){
+    const ni = i + direction[0]
+    const nj = j + direction[1]
+    if(ni < 0 || ni >= 8 || nj < 0 || nj >= 8){
+      return [];
+    }
+    // 違う色でなければ終了
+    const np = cells[ni][nj]
+    if(np === EMPTY){
+      return [];
+    }
+    if(np === nextP){
+      return fCells;
+    }
+    fCells.push([ni, nj])
+    return search(cells, direction, ni, nj, fCells, nextP)
+  }
+  const fCells = []
+  for (let s = 0; s < directions.length; s++) {
+    // 隣が違う色でなければ終了
+    const fs = search(cells, directions[s], i, j, [], nextP);
+    for (let t = 0; t < fs.length; t++) {
+      fCells.push(fs[t])
+    }
+  }
+  return fCells
 }
 
 /**
@@ -92,12 +123,10 @@ function App() {
         newCells[i][j] = cells[i][j];
       }
     }
-    // TODO: 盤面を変更できるか調べる
+    // 盤面を変更できるか調べる
     const fCells = flipCells(newCells, s, t, nextP)
-    console.log(fCells)
-    // TODO: からなら何もしない, 要素があれば更新する
+    // からなら何もしない, 要素があれば更新する
     if(fCells.length === 0){
-      console.log('no flip')
       return;
     }
     newCells[s][t] = nextP
