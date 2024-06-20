@@ -146,6 +146,9 @@ function App() {
       <div>
         next to {nextP}
       </div>
+      <div>
+        <a href="https://github.com/st34-satoshi/memo2/tree/main/javascript/npm-react/othello">GitHub</a>
+      </div>
     </div>
   );
 }
