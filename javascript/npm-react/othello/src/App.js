@@ -1,11 +1,12 @@
 import './App.css';
+import { useState } from 'react';
 
-function Board(){
-  function cell(){
+function Board({cells}){
+  function cell(i){
     const buttons = [];
-    for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
       buttons.push(
-        <button>O</button>
+        <button className='gameCell'>{cells[i][j]}</button>
       )
     }
     return(
@@ -17,7 +18,7 @@ function Board(){
   const rows = [];
   for (let i = 0; i < 8; i++) {
     rows.push(
-      cell()
+      cell(i)
     )
   }
 
@@ -33,15 +34,30 @@ function Board(){
       </div> */}
       <div>
         {rows}
+        {/* {cells} */}
       </div>
     </>
   )
 }
 
 function App() {
+  const tmpCells = new Array(8);
+  for(let i = 0; i < 8; i++) {
+    tmpCells[i] = new Array(8).fill('・');
+  }
+  tmpCells[3][3] = '⚪️'
+  tmpCells[3][4] = '⚫️'
+  tmpCells[4][4] = '⚪️'
+  tmpCells[4][3] = '⚫️'
+  // for(let i = 0; i < 8; i++) {
+  //   for(let j = 0; j < 8; i++) {
+  console.log('hello')
+  console.log(tmpCells)
+  const [cells, setCells] = useState(tmpCells);
+
   return (
     <div className="App">
-      <Board />
+      <Board cells={cells}/>
     </div>
   );
 }

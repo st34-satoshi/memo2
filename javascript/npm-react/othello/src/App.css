@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.gameCell{
+  height: 50px;
+  width: 50px;
+}
