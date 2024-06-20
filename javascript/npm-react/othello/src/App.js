@@ -27,6 +27,11 @@ function flipCells(cells, i, j){
  * @param {*} p 駒
  */
 function updatedCells(cells, fCells, p){
+  for (let i = 0; i < fCells.length; i++) {
+    const u = fCells[i]
+    cells[u[0]][u[1]] = p
+  }
+
   return cells
 }
 
