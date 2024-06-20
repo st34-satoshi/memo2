@@ -137,6 +137,9 @@ function App() {
   return (
     <div className="App">
       <Board cells={cells} handleClick={handleClick}/>
+      <div>
+        next to {nextP}
+      </div>
     </div>
   );
 }
