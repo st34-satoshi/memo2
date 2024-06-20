@@ -1,23 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+
+function Board(){
+  function cell(){
+    const buttons = [];
+    for (let i = 0; i < 8; i++) {
+      buttons.push(
+        <button>O</button>
+      )
+    }
+    return(
+      <div>
+        {buttons}
+      </div>
+    )
+  }
+  const rows = [];
+  for (let i = 0; i < 8; i++) {
+    rows.push(
+      cell()
+    )
+  }
+
+  return(
+    <>
+      {/* <div>
+        <button>O</button>
+        <button>X</button>
+      </div>
+      <div>
+        <button>O</button>
+        <button>X</button>
+      </div> */}
+      <div>
+        {rows}
+      </div>
+    </>
+  )
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Board />
     </div>
   );
 }
