@@ -1,6 +1,35 @@
 import './App.css';
 import { useState } from 'react';
 
+/**
+ * 反転する[i, j]の配列を返す
+ * @param {*} cells 
+ * @param {*} i 
+ * @param {*} j 
+ */
+function flipCells(cells, i, j){
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1]
+  ]
+  return [[4,4]]
+}
+
+/**
+ * 現在のcellsから変更した後のcellsを返す
+ * @param {*} cells 
+ * @param {*} p 駒
+ */
+function updatedCells(cells, fCells, p){
+  return cells
+}
+
 function Board({cells, handleClick}){
   function cell(i){
     const buttons = [];
@@ -41,6 +70,14 @@ function App() {
   tmpCells[4][4] = '⚪️'
   tmpCells[4][3] = '⚫️'
   const [cells, setCells] = useState(tmpCells);
+  const [nextP, setNextP] = useState('⚫️')
+
+  function nextPiece(){
+    if(nextP === '⚫️'){
+      return '⚪️';
+    }
+    return '⚫️';
+  }
 
   function handleClick(s, t){
     const newCells = new Array(8);
@@ -50,8 +87,17 @@ function App() {
         newCells[i][j] = cells[i][j];
       }
     }
-    newCells[s][t] = 'A'
-    setCells(newCells)
+    // TODO: 盤面を変更できるか調べる
+    const fCells = flipCells(newCells, s, t, nextP)
+    console.log(fCells)
+    // TODO: からなら何もしない, 要素があれば更新する
+    if(fCells.length === 0){
+      console.log('no flip')
+      return;
+    }
+    newCells[s][t] = nextP
+    setNextP(nextPiece())
+    setCells(updatedCells(newCells, fCells, nextP))
   }
 
   return (
