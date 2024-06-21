@@ -16,4 +16,4 @@ data/に分析したい.pgnファイルを用意する
 - `python main.py`
 
 ### 結果
-blunder/にpng画像で出力される。{white-black-手数-次の1手}.pgn
+blunder/にpng画像で出力される。{white-black-手数-直前の1手}.pgn

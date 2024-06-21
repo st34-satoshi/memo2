@@ -58,7 +58,6 @@ if __name__ == '__main__':
             values = []
             for i, move in enumerate(game.mainline_moves()):
                 print(i)
-                previous_fen = board.fen()
                 board.push(move)
                 next_value = compute_white_value(board.fen())
                 values.append(next_value)
