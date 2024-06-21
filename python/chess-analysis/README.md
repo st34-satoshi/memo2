@@ -8,5 +8,12 @@ pgnファイルから複数の対局を探す
 - ブランダーの手数の範囲: オープニングだけなら0~10とか？
 
 ## 開発
+### 準備
+data/に分析したい.pgnファイルを用意する
+
+### 実行
 - `pip install -r requirements.txt`
 - `python main.py`
+
+### 結果
+blunder/にpng画像で出力される。{white-black-手数-次の1手}.pgn
