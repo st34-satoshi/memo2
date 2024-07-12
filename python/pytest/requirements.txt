@@ -1,0 +1,9 @@
+pytest
+pytest-cov
+pytest-html
+pytest-mock
+pytest-md-report
+pytest-json-report
+deepdiff
+pytest-icdiff
+py
