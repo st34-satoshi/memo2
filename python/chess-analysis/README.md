@@ -13,7 +13,7 @@ data/に分析したい.pgnファイルを用意する
 
 ### 実行
 - `pip install -r requirements.txt`
-- `python main.py`
+- `python main.py`: 対局の分析に時間がかかる.3局の分析に1分かかる(14局で5分くらいだった)
 
 ### 結果
 blunder/にpng画像で出力される。{white-black-手数-直前の1手}.pgn

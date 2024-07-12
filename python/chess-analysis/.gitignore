@@ -1,3 +1,5 @@
 /venv-chess-analysis
 /data/*.pgn
 /blunders/*.png
+
+position.svg

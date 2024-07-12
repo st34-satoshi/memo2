@@ -57,7 +57,7 @@ if __name__ == '__main__':
             print('game start')
             values = []
             for i, move in enumerate(game.mainline_moves()):
-                print(i)
+                previous_fen = board.fen()
                 board.push(move)
                 next_value = compute_white_value(board.fen())
                 values.append(next_value)
@@ -66,6 +66,8 @@ if __name__ == '__main__':
                     # プレーヤーが指したことで評価値が変わった
                     blunder_cnt += 1
                     save_image(board, game.headers["White"], game.headers["Black"], i, move)
+                    print(f'blunder, {game.headers["White"]} vs {game.headers["Black"]}, moves = {i // 2}, next move = {move}')
+                    print(previous_fen)
                 previous_value = next_value
             print(values)
             game_cnt += 1
