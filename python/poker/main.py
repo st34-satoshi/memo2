@@ -85,7 +85,7 @@ def is_one_pair(cards):
     counts = Counter(numbers)
     v = list(counts.values())
     v.sort()
-    return v == [1, 1, 2]
+    return v == [1, 1, 1, 2]
 
 def is_two_pair(cards):
     numbers = take_numbers(cards)
