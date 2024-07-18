@@ -1,5 +1,6 @@
 import random
-from collections import Counter
+from collections import Counter, defaultdict
+import itertools
 
 def wait_input():
     print('////////////')
@@ -46,12 +47,15 @@ def is_cards(s):
     return True
 
 def random_select(i):
+    cards = all_cards()
+    return random.sample(cards, i)
+
+def all_cards():
     cards = []
     for s in ['c', 'd', 'h', 's']:
         for n in range(13):
             cards.append(s + str(n+1))
-    print(cards)
-    return random.sample(cards, i)
+    return cards
 
 def hands(cards):
     """
@@ -145,6 +149,39 @@ def is_flush(cards):
             return False
     return True
 
+
+"""
+全てのパターンを調べて役の計算が正しいか確認する
+"""
+
+def test_all():
+    print("テスト開始")
+    cards = all_cards()
+    patterns = list(itertools.combinations(cards, 5))
+    print(f'card pattern: {len(patterns) == 2598960}')
+
+    hand_patterns = defaultdict(lambda: 0)
+    for i, card_set in enumerate(patterns):
+        if i % 100000 == 0:
+            print(f"{i} / 2598960, {i*100//2598960}%")
+        hand = hands(list(card_set))
+        hand_patterns[hand] += 1
     
+    # 参考サイト: https://mpj-portal.jp/forbeginners/hand-role-poker-hands-strength/
+    print(hand_patterns)
+    print(f'ロイヤルフラッシュ: {hand_patterns['ロイヤルフラッシュ'] == 4}')
+    print(f'ストレートフラッシュ: {hand_patterns['ストレートフラッシュ'] == 36}')
+    print(f'フォーカード: {hand_patterns['フォーカード'] == 624}')
+    print(f'フルハウス: {hand_patterns['フルハウス'] == 3744}')
+    print(f'フラッシュ: {hand_patterns['フラッシュ'] == 5108}')
+    print(f'ストレート: {hand_patterns['ストレート'] == 10200}')
+    print(f'スリーカード: {hand_patterns['スリーカード'] == 54912}')
+    print(f'ツーペア: {hand_patterns['ツーペア'] == 123552}')
+    print(f'ワンペア: {hand_patterns['ワンペア'] == 1098240}')
+
+
 if __name__ == '__main__':
     wait_input()
+
+    # テスト用
+    # test_all()
