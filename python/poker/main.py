@@ -3,7 +3,6 @@ from collections import Counter
 
 def wait_input():
     print('////////////')
-    print('////////////')
     print('q: 終了')
     print('r: ランダムに5枚取得する')
     print('カード5種類: 役を表示する')
@@ -17,10 +16,34 @@ def wait_input():
         print(f'役: {hand}')
     elif s == "q":
         return
+    elif is_cards(s):
+        cards = to_cards(s)
+        hand = hands(cards)
+        print(f'役: {hand}')
     else:
-        # 
-        pass
+        print("入力が正しくありません")
+    print()
     wait_input()
+
+def to_cards(s):
+    return s.split()
+
+def is_cards(s):
+    ss = s.split()
+    if len(ss) != 5:
+        return False
+    for c in ss:
+        if len(c) != 2 and len(c) != 3:
+            return False
+        if c[0] not in ['c', 'd', 'h', 's']:
+            return False
+        try:
+            i = int(c[1:])
+            if i < 1 and 13 < i:
+                return False
+        except:
+            return False
+    return True
 
 def random_select(i):
     cards = []
