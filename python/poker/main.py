@@ -116,7 +116,6 @@ def is_four(cards):
     v = max(counts.values())
     return v == 4
 
-
 def is_straight_flush(cards):
     if not is_flush(cards):
         return False
@@ -134,20 +133,19 @@ def is_straight(cards):
             return False
     return True
 
-def take_numbers(cards):
-    numbers = []
-    for c in cards:
-        n = int(c[1:])
-        numbers.append(n)
-    return numbers
-
-
 def is_flush(cards):
     s = cards[0][0]
     for c in cards:
         if s != c[0]:
             return False
     return True
+
+def take_numbers(cards):
+    numbers = []
+    for c in cards:
+        n = int(c[1:])
+        numbers.append(n)
+    return numbers
 
 
 """
