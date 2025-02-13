@@ -6,5 +6,5 @@ def random_number(d):
 
 
 if __name__ == '__main__':
-    for _ in range(10):
+    for _ in range(50):
         print(f'F{random_number(8)}')
