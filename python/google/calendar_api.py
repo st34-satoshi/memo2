@@ -1,8 +1,13 @@
 import requests
 from datetime import datetime
 from collections import defaultdict
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib import rcParams
 
-
+# 日本語フォント設定
+rcParams['font.family'] = 'sans-serif'
+rcParams['font.sans-serif'] = ['Hiragino Maru Gothic Pro']
 
 def fetch_all_events(url):
 
@@ -51,8 +56,51 @@ def monthly_events(events):
             year, month_num = month.split('-')
             month_name = datetime(int(year), int(month_num), 1).strftime('%Y年%m月')
             print(f"{month_name}: {monthly_events[month]}件")
+        
+        # グラフを作成
+        create_monthly_chart(monthly_events)
     else:
         print("イベントが見つかりませんでした。")
+
+def create_monthly_chart(monthly_events):
+    """月毎のイベント数を折れ線グラフで表示"""
+    # データを準備
+    months = []
+    counts = []
+    
+    for month in sorted(monthly_events.keys()):
+        year, month_num = month.split('-')
+        # datetimeオブジェクトを作成（グラフのX軸用）
+        dt = datetime(int(year), int(month_num), 1)
+        months.append(dt)
+        counts.append(monthly_events[month])
+    
+    # グラフを作成
+    plt.figure(figsize=(12, 6))
+    plt.plot(months, counts, marker='o', linewidth=3, markersize=8, color='#2E86AB', markerfacecolor='#A23B72', markeredgecolor='#2E86AB', markeredgewidth=2)
+    
+    # グラフの設定
+    plt.title('月毎のイベント数', fontsize=16, fontweight='bold', pad=20)
+    plt.xlabel('月', fontsize=12)
+    plt.ylabel('イベント数', fontsize=12)
+    plt.grid(True, alpha=0.3, linestyle='--')
+    
+    # X軸の日付フォーマット
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y年%m月'))
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.xticks(rotation=45)
+    
+    # データポイントの上に数値を表示
+    for i, (month, count) in enumerate(zip(months, counts)):
+        plt.text(month, count + 0.1, str(count), ha='center', va='bottom', fontweight='bold', fontsize=10)
+    
+    # 背景色を設定
+    plt.gca().set_facecolor('#f8f9fa')
+    plt.gcf().set_facecolor('white')
+    
+    plt.tight_layout()
+    plt.savefig('monthly_events.png')
+    plt.close()
 
 if __name__ == '__main__':
     api_key = 'YOUR_API_KEY'
