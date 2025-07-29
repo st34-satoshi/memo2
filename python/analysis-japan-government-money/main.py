@@ -26,12 +26,25 @@ def count_occurrences(data, header):
     print(counter)
     print(f"合計: {total}")
 
+def sum_values(data, header):
+    """指定したヘッダーの値の合計を計算する関数"""
+    total = 0
+    for row in data:
+        # s = row['府省庁']
+        # if s != '厚生労働省':
+        #     continue
+        value = row[header]
+        if value:
+            total += float(value)
+    print(f"合計: {'{:,.0f}'.format(total)}")
+
 
 def main():
     print("Hello from analysis-japan-government-money!")
     data = load_expenditure_data()
     print(len(data))
     count_occurrences(data, '府省庁')
+    sum_values(data, '金額')
 
 
 if __name__ == "__main__":
