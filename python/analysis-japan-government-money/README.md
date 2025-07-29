@@ -7,7 +7,7 @@
 ### パッケージをインストール
 - `uv sync`
 
-## [行政事業レビュー見える化サイト RSシステム](https://rssystem.go.jp/notice)
+## [行政事業レビュー見える化サイト RSシステム](https://rssystem.go.jp/top)
 ダウンロードできるCSVファイルを使って分析を行う。
 
 ### 実行
